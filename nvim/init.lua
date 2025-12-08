@@ -157,6 +157,8 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+vim.diagnostic.config { virtual_text = true }
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -974,7 +976,7 @@ require('lazy').setup({
       vim.g.copilot_no_tab_map = true
       vim.api.nvim_set_keymap('i', '<C-J>', 'copilot#Accept("<CR>")', { silent = true, expr = true })
       vim.api.nvim_create_autocmd('FileType', {
-        pattern = { 'markdown' },
+        pattern = { 'markdown', 'md' },
         callback = function()
           vim.b.copilot_enabled = false
         end,
