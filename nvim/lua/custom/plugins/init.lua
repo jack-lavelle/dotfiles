@@ -3,12 +3,20 @@
 --
 -- See the kickstart.nvim README for more information
 return {
-  'sindrets/diffview.nvim',
-  dependencies = {
-    'nvim-tree/nvim-web-devicons', -- Optional, for icons
-    'nvim-lua/plenary.nvim', -- Required dependency
+  {
+    'sindrets/diffview.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons', -- Optional, for icons
+      'nvim-lua/plenary.nvim', -- Required dependency
+    },
+    config = function()
+      require('diffview').setup()
+    end,
   },
-  config = function()
-    require('diffview').setup()
-  end,
+  {
+    'OXY2DEV/markview.nvim',
+    config = function()
+      require('markview').setup()
+    end,
+  },
 }
