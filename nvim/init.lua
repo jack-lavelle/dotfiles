@@ -721,6 +721,7 @@ require('lazy').setup({
         },
 
         ts_ls = {},
+        omnisharp = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -736,6 +737,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'omnisharp', -- Used to format C# code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -760,6 +762,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         javascript = { 'prettier' },
+        cs = { 'omnisharp' },
       },
       format_on_save = {
         timeout_ms = 500,
@@ -993,7 +996,7 @@ require('lazy').setup({
     main = 'nvim-treesitter', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript', 'omnisharp' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
