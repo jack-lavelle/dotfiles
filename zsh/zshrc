@@ -111,3 +111,6 @@ export NVM_DIR="$HOME/.nvm"
 cd ~
 alias lorerim='(cd /mnt/d/LoreRim && ./ModOrganizer.exe "moshortcut://:LoreRim" &)'
 export PATH="$HOME/.local/bin:$PATH"
+
+export EDITOR="nvim"
+export VISUAL="$EDITOR"

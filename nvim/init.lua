@@ -148,6 +148,10 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
+-- Set Neovim background to transparent
+vim.cmd.highlight 'Normal guibg=NONE'
+vim.cmd.highlight 'NonText guibg=NONE'
+
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 
@@ -155,7 +159,7 @@ vim.opt.inccommand = 'split'
 vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 999
 
 vim.diagnostic.config { virtual_text = true }
 
@@ -694,8 +698,14 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
         -- rust_analyzer = {},
+        pyright = {
+          settings = {
+            pyright = {
+              disableOrganizeImports = true,
+            },
+          },
+        },
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -738,6 +748,7 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'omnisharp', -- Used to format C# code
+        'pyright',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -753,6 +764,14 @@ require('lazy').setup({
           end,
         },
       }
+
+      -- Ruff LSP (installed via uv, not Mason)
+      require('lspconfig').ruff.setup {
+        capabilities = capabilities,
+        on_attach = function(client)
+          client.server_capabilities.hoverProvider = false
+        end,
+      }
     end,
   },
 
@@ -763,6 +782,7 @@ require('lazy').setup({
         lua = { 'stylua' },
         javascript = { 'prettier' },
         cs = { 'omnisharp' },
+        python = { 'ruff_format' },
       },
       format_on_save = {
         timeout_ms = 500,
@@ -936,12 +956,15 @@ require('lazy').setup({
     priority = 1000,
     init = function()
       require('tokyonight').setup {
+        transparent = true,
         style = 'night', -- optional, matches `tokyonight-night`
         styles = {
           comments = { italic = false },
           keywords = { italic = false },
           functions = { italic = false },
           variables = { italic = false },
+          sidebars = 'transparent',
+          floats = 'transparent',
         },
       }
 
@@ -996,7 +1019,22 @@ require('lazy').setup({
     main = 'nvim-treesitter', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'typescript', 'omnisharp' },
+      ensure_installed = {
+        'bash',
+        'c',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+        'typescript',
+        'omnisharp',
+        'python',
+      },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
