@@ -74,6 +74,18 @@ plugins=(git git-auto-fetch)
 
 source $ZSH/oh-my-zsh.sh
 
+# Shorten agnoster path to last 2 components with ellipsis prefix when truncated
+prompt_dir() {
+  local rel_path="${PWD/#$HOME/~}"
+  local -a parts
+  parts=("${(@s:/:)rel_path}")
+  if (( ${#parts} > 2 )); then
+    prompt_segment blue $CURRENT_FG '.../%2~'
+  else
+    prompt_segment blue $CURRENT_FG '%2~'
+  fi
+}
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
