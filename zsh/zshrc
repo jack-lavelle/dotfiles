@@ -74,6 +74,21 @@ plugins=(git git-auto-fetch)
 
 source $ZSH/oh-my-zsh.sh
 
+# Hide user@host from agnoster prompt
+prompt_context() {}
+
+# Shorten agnoster path: full path for shallow dirs, ~/…/parent/current for deep ones
+prompt_dir() {
+  local rel_path="${PWD/#$HOME/~}"
+  local -a parts
+  parts=("${(@s:/:)rel_path}")
+  if (( ${#parts} > 3 )); then
+    prompt_segment blue $CURRENT_FG "~/.../${parts[-2]}/${parts[-1]}"
+  else
+    prompt_segment blue $CURRENT_FG '%~'
+  fi
+}
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
