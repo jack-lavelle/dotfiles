@@ -157,6 +157,15 @@ vim.opt.inccommand = 'split'
 
 -- Show which line your cursor is on
 vim.opt.cursorline = true
+vim.api.nvim_create_autocmd('ColorScheme', {
+  pattern = '*',
+  callback = function()
+    vim.api.nvim_set_hl(0, 'CursorLine', { bg = 'NONE' })
+    vim.api.nvim_set_hl(0, 'CursorLineNr', { bg = 'NONE' })
+  end,
+})
+vim.api.nvim_set_hl(0, 'CursorLine', { bg = 'NONE' })
+vim.api.nvim_set_hl(0, 'CursorLineNr', { bg = 'NONE' })
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 999
