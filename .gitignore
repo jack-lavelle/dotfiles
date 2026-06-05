@@ -1,4 +1,7 @@
 nvim/nvim-linux-x86_64
 nvim/nvim-linux-x86_64/*
-
 dfas
+
+node_modules/
+package-lock.json
+package.json
