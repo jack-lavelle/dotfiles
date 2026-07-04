@@ -83,7 +83,7 @@ prompt_dir() {
   local -a parts
   parts=("${(@s:/:)rel_path}")
   if (( ${#parts} > 3 )); then
-    prompt_segment blue $CURRENT_FG "~/.../${parts[-2]}/${parts[-1]}"
+    prompt_segment blue $CURRENT_FG ".../${parts[-2]}/${parts[-1]}"
   else
     prompt_segment blue $CURRENT_FG '%~'
   fi
